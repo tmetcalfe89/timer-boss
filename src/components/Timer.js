@@ -16,7 +16,7 @@ function Timer({ hour, minute, start, name: outerName, removeTimer }) {
   const getTargetTime = () =>
     hour * 60 * 60 * 1000 + minute * 60 * 1000 + start;
   const getElapsedTime = () => getTargetTime() - now;
-  const isTimeRemaining = () => now - start < getTargetTime();
+  const isTimeRemaining = () => now < getTargetTime();
   const getRemainingHours = () => Math.floor(getElapsedTime() / 1000 / 60 / 60);
   const getRemainingMinutes = () =>
     Math.floor(getElapsedTime() / 1000 / 60) % 60;
