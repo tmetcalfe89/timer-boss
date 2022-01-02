@@ -2,9 +2,10 @@ import { useState } from "react";
 import TimerForm from "./components/TimerForm";
 import Timers from "./components/Timers";
 import { v4 as uuid } from "uuid";
+import { useLocalStorage } from "react-use";
 
 function App() {
-  const [timers, setTimers] = useState([]);
+  const [timers, setTimers] = useLocalStorage("timers", []);
 
   const createTimer = (hour, minute, name) => {
     setTimers([
