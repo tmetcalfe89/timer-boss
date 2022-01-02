@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/timer-boss/static/css/main.efaadbdf.css",
-    "main.js": "/timer-boss/static/js/main.efc04bb6.js",
+    "main.js": "/timer-boss/static/js/main.f695539b.js",
     "index.html": "/timer-boss/index.html",
     "main.efaadbdf.css.map": "/timer-boss/static/css/main.efaadbdf.css.map",
-    "main.efc04bb6.js.map": "/timer-boss/static/js/main.efc04bb6.js.map"
+    "main.f695539b.js.map": "/timer-boss/static/js/main.f695539b.js.map"
   },
   "entrypoints": [
     "static/css/main.efaadbdf.css",
-    "static/js/main.efc04bb6.js"
+    "static/js/main.f695539b.js"
   ]
 }
