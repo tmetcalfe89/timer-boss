@@ -1,17 +1,13 @@
 import { useState } from "react";
-import { useCss } from "react-use";
+import { fixTime, clamp } from "../util";
 
 const defaultValues = {
-  hour: "0",
+  hour: "00",
   minute: "00",
   name: "Timer",
 };
 
 function TimerForm({ createTimer = () => {} }) {
-  const inputClass = useCss({
-    width: "2rem",
-  });
-
   const [hour, setHour] = useState(defaultValues.hour);
   const [minute, setMinute] = useState(defaultValues.minute);
   const [name, setName] = useState(defaultValues.name);
@@ -28,39 +24,49 @@ function TimerForm({ createTimer = () => {} }) {
     returnToDefaults();
   };
 
+  const adjustHour = (newHour) =>
+    setHour((oldHour) =>
+      fixTime(
+        clamp(
+          typeof newHour === "function" ? newHour(oldHour) : newHour,
+          0,
+          99
+        ) || 0
+      )
+    );
+  const adjustMinute = (newMinute) =>
+    setMinute((oldMinute) =>
+      fixTime(
+        clamp(
+          typeof newMinute === "function" ? newMinute(oldMinute) : newMinute,
+          0,
+          59
+        ) || 0
+      )
+    );
+
   const updateHour = ({ target: { value: newValue } }) => {
-    setHour(newValue);
+    adjustHour(newValue);
   };
   const updateMinute = ({ target: { value: newValue } }) => {
     if (newValue < 0) {
       if (hour > 0) {
-        setHour((oldHour) => +oldHour - 1);
-        setMinute(59);
+        adjustHour((oldHour) => +oldHour - 1);
+        adjustMinute(59);
       }
     } else {
-      setHour((oldHour) => +oldHour + Math.floor(+newValue / 60));
-      setMinute(`${newValue % 60}`.padStart(2, "0"));
+      adjustHour((oldHour) => +oldHour + Math.floor(+newValue / 60));
+      adjustMinute(+newValue % 60);
     }
   };
 
   return (
     <form onSubmit={submit}>
       <h1>Create Timer</h1>
-      <div>
-        <input
-          type="number"
-          min="0"
-          value={hour}
-          onChange={updateHour}
-          className={inputClass}
-        />
+      <div className="timer-face">
+        <input value={hour} onChange={updateHour} />
         :
-        <input
-          type="number"
-          value={minute}
-          onChange={updateMinute}
-          className={inputClass}
-        />
+        <input value={minute} onChange={updateMinute} />
       </div>
       <div>
         <input value={name} onChange={(e) => setName(e.target.value)} />
