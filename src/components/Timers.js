@@ -1,7 +1,7 @@
 import React from "react";
 import Timer from "./Timer";
 
-function Timers({ timers, removeTimer }) {
+function Timers({ timers, removeTimer, modifyTimer }) {
   return (
     <div>
       <h1>Active Timers</h1>
@@ -10,6 +10,7 @@ function Timers({ timers, removeTimer }) {
           key={`timer-${id}`}
           {...timer}
           removeTimer={() => removeTimer(id)}
+          modifyTimer={(modifications) => modifyTimer(modifications, id)}
         />
       ))}
     </div>
