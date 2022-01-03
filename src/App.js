@@ -14,6 +14,14 @@ function App() {
     ]);
   };
 
+  const modifyTimer = (modifications, id) => {
+    setTimers(
+      timers.map((timer) =>
+        timer.id === id ? { ...timer, ...modifications } : timer
+      )
+    );
+  };
+
   const removeTimer = (removeId) => {
     setTimers(timers.filter(({ id }) => id !== removeId));
   };
@@ -21,7 +29,11 @@ function App() {
   return (
     <div className="App">
       <TimerForm createTimer={createTimer} />
-      <Timers timers={timers} removeTimer={removeTimer} />
+      <Timers
+        timers={timers}
+        removeTimer={removeTimer}
+        modifyTimer={modifyTimer}
+      />
     </div>
   );
 }

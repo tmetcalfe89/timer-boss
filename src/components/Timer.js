@@ -1,13 +1,12 @@
 import { useState } from "react";
 import { useInterval, useAudio } from "react-use";
 
-function Timer({ hour, minute, start, name: outerName, removeTimer }) {
+function Timer({ hour, minute, start, name, removeTimer, modifyTimer }) {
   const [now, setNow] = useState(Math.floor(Date.now() / 1000) * 1000);
-  const [audio, state, controls, ref] = useAudio({
+  const [audio] = useAudio({
     src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3",
     autoPlay: true,
   });
-  const [name, setName] = useState(outerName);
 
   useInterval(() => {
     setNow(Math.floor(Date.now() / 1000) * 1000);
@@ -32,7 +31,10 @@ function Timer({ hour, minute, start, name: outerName, removeTimer }) {
         <>
           <div>{getTimeDisplay()}</div>
           <div>
-            <input value={name} onChange={(e) => setName(e.target.value)} />
+            <input
+              value={name}
+              onChange={({ target: { value: name } }) => modifyTimer({ name })}
+            />
           </div>
         </>
       ) : (
